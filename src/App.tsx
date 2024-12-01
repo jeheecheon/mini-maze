@@ -1,16 +1,12 @@
-import React from "react";
-import useMaze from "@/hooks/useMaze";
+import Maze from "@/Maze";
+import { MazeProvider } from "@/store/maze";
 
-import "@/globals.css";
-
-const MazeCanvas: React.FC = () => {
-  const { canvasRef } = useMaze();
-
+function App() {
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <canvas ref={canvasRef} className="border-2 border-gray-500" />
-    </div>
+    <MazeProvider>
+      <Maze />
+    </MazeProvider>
   );
-};
+}
 
-export default MazeCanvas;
+export default App;
