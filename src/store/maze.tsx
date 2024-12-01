@@ -1,4 +1,5 @@
-import { createContext } from "react";
+import { exampleGrid } from "@/utils/maze";
+import { createContext, useState } from "react";
 
 type MazeInfo = {
   grid: number[][];
@@ -6,11 +7,16 @@ type MazeInfo = {
 };
 
 const initialMazeInfo: MazeInfo = {
-  grid: [],
+  grid: exampleGrid,
   isDone: false,
 };
 
-const MazeContext = createContext<MazeInfo>(initialMazeInfo);
+type MazeContextValue = {
+  mazeInfo: MazeInfo;
+  setMazeInfo: React.Dispatch<React.SetStateAction<MazeInfo>>;
+};
+
+const MazeContext = createContext<MazeContextValue | null>(null);
 
 type MazeProviderProps = {
   children: React.ReactNode;
@@ -18,12 +24,13 @@ type MazeProviderProps = {
 
 function MazeProvider(props: MazeProviderProps) {
   const { children } = props;
+  const [mazeInfo, setMazeInfo] = useState<MazeInfo>(initialMazeInfo);
 
   return (
-    <MazeContext.Provider value={initialMazeInfo}>
+    <MazeContext.Provider value={{ mazeInfo, setMazeInfo }}>
       {children}
     </MazeContext.Provider>
   );
 }
 
-export { MazeProvider };
+export { MazeProvider, MazeContext, type MazeInfo };

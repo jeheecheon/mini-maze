@@ -1,10 +1,12 @@
 import { colCount, rowCount } from "@/utils/constants/maze";
-import { drawMaze, exampleGrid } from "@/utils/maze";
+import { drawMaze } from "@/utils/maze";
 import { useEffect, useRef, useState } from "react";
+import useMazeContext from "@/hooks/useMazeContext";
 
 export default function useMaze() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [cellSize, setCellSize] = useState<number>(0);
+  const { mazeInfo } = useMazeContext();
 
   // 캔버스 크기 업데이트 함수
   const updateCanvasSize = () => {
@@ -38,7 +40,7 @@ export default function useMaze() {
         canvas.width = colCount * cellSize;
         canvas.height = rowCount * cellSize;
 
-        drawMaze(ctx, exampleGrid, cellSize);
+        drawMaze(ctx, mazeInfo.grid, cellSize);
       }
     }
   }, [cellSize]);
